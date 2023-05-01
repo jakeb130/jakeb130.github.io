@@ -37,7 +37,22 @@ function game() {
   let computerScore = 0;
 
   for (let i = 1; i <= 5; i++) {
-    const playerSelection = prompt("Rock, paper, or scissors?"); // Get player selection
+    let playerSelection;
+    let isValidChoice = false;
+
+    // Keep prompting for input until a valid choice is entered
+    while (!isValidChoice) {
+      playerSelection = prompt("Rock, paper, or scissors?"); // Get player selection
+
+      if (
+        ["rock", "paper", "scissors"].includes(playerSelection.toLowerCase())
+      ) {
+        isValidChoice = true;
+      } else {
+        alert("Invalid choice. Please enter rock, paper, or scissors.");
+      }
+    }
+
     const computerSelection = getComputerChoice();
     const result = playRound(playerSelection, computerSelection);
     console.log(result);
@@ -62,4 +77,5 @@ function game() {
   }
 }
 
-game(); // Call the game function
+// Attach the game function to the button click event
+document.getElementById("startGame").addEventListener("click", game);
