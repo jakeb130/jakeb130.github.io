@@ -6,9 +6,6 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-  // Convert player selection to lowercase to ensure case-insensitive input
-  playerSelection = playerSelection.toLowerCase();
-
   // Define possible outcomes for the game
   let outcomes = {
     rock: { beats: "scissors", "loses to": "paper" },
@@ -30,6 +27,11 @@ function playRound(playerSelection, computerSelection) {
       losingText.charAt(0).toUpperCase() + losingText.slice(1)
     }.`;
   }
+}
+
+function updateResults(text) {
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = text;
 }
 
 function game() {
@@ -55,7 +57,7 @@ function game() {
 
     const computerSelection = getComputerChoice();
     const result = playRound(playerSelection, computerSelection);
-    console.log(result);
+    updateResults(result);
 
     if (result.includes("win")) {
       playerScore++;
@@ -64,18 +66,27 @@ function game() {
     }
   }
 
-  if (playerScore > computerScore) {
-    console.log(
-      `You win the game! Final score: ${playerScore}-${computerScore}`
-    );
-  } else if (computerScore > playerScore) {
-    console.log(
-      `You lose the game! Final score: ${playerScore}-${computerScore}`
-    );
-  } else {
-    console.log(`It's a tie! Final score: ${playerScore}-${computerScore}`);
-  }
+if (playerScore > computerScore) {
+  updateResults(
+    `You win the game! Final score: ${playerScore}-${computerScore}`
+  );
+} else if (computerScore > playerScore) {
+  updateResults(
+    `You lose the game! Final score: ${playerScore}-${computerScore}`
+  );
+} else {
+  updateResults(`It's a tie! Final score: ${playerScore}-${computerScore}`);
 }
 
 // Attach the game function to the button click event
-document.getElementById("startGame").addEventListener("click", game);
+document
+  .getElementById("rock")
+  .addEventListener("click", () => playRound("rock", getComputerChoice()));
+document
+  .getElementById("paper")
+  .addEventListener("click", () => playRound("paper", getComputerChoice()));
+document
+  .getElementById("scissors")
+  .addEventListener("click", () => playRound("scissors", getComputerChoice()));
+
+  
